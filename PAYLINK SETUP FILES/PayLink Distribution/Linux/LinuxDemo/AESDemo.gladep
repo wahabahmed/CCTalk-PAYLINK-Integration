@@ -1,0 +1,10 @@
+<?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
+<!DOCTYPE glade-project SYSTEM "http://glade.gnome.org/glade-project-2.0.dtd">
+
+<glade-project>
+  <name>AESDemo</name>
+  <program_name>AESDemo</program_name>
+  <gettext_support>FALSE</gettext_support>
+  <support_source_file>support_borked.c</support_source_file>
+  <support_header_file>support_borked.h</support_header_file>
+</glade-project>

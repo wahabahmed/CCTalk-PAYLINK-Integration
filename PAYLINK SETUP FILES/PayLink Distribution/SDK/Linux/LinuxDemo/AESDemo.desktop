@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=AESDemo
+Comment=AESDemo
+Exec=AESDemo
+Icon=/usr/local/share/pixmaps/AESDemo/AESDemo-icon.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+GenericName[en_US]=

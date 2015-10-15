@@ -1,0 +1,158 @@
+;===========================================================
+; File    : Aesimhei.inf
+;
+; Abstract: Windows 98/Me/2000/XP INF for Intelligent Money
+;							Handling Equipment Interface
+;
+; (c) Copyright 2003 Aardvark Embedded Solutions Ltd.
+;
+;===========================================================
+
+
+; ADDING AN ENTRY FOR OEM/CUSTOM DEVICES
+; --------------------------------------
+; For those interested in simply adding an entry for their custom
+; board with a custom ID, and planning to use the PLX SDK supplied
+; driver, follow the simple steps below.  Note that additional
+; changes may be required depending upon the device type and any
+; other requirements of custom drivers, etc.  Refer to the
+; Windows DDK for additional information regarding changes.
+;
+; To add a custom device, in the [PLX.Mfg] section, add an entry
+; similar to the existing entries according to the following:
+;
+;  "<My Device Name>" = DDInstall_<PLX_Chip>, PCI\VEN_<Vxxx>&DEV_<Dxxx>
+;
+;  where:
+;
+;    <My Device Name> = Name of device as it will appear in the
+;                       Windows Device Manager.
+;
+;    <PLX_Chip>       = A supported PLX chip type, such as 9054 or 9656.
+;                       This INF file already contains installation
+;                       sections for currently supported PLX chips,
+;                       assuming the PLX supplied driver will be used.
+;
+;    <Vxxx>           = The Vendor ID of your device.  An ID is
+;                       assigned to each member of the PCI SIG.
+;                       10B5 is assigned to and reserved for use by
+;                       PLX Technology.
+;
+;    <Dxxx>           = The Device ID of your device.  Each vendor is
+;                       responsible to managing their own Device IDs.
+;                       PLX maintains a list of all IDs associated with
+;                       a Vendor ID of 10B5.  The default list below
+;                       contains IDs of supported PLX RDKs and the
+;                       default IDs of PLX chips.
+;
+;
+;===================================================================
+
+
+
+
+[Version]
+Signature   = $CHICAGO$
+Provider    = %AES%
+;Class      = Unknown
+Class       = MultiportSerial
+ClassGuid   = {50906cb8-ba12-11d1-bf5d-0000f805f530} 
+DriverVer   = 02/23/2003, 3.40.0.1
+
+
+
+;-----------------------------------------------------------
+; Driver information
+;-----------------------------------------------------------
+
+[Manufacturer]
+%AES% = AES.Ltd
+
+[AES.Ltd]
+;"Money Handling Equipment Interface (Prototype)"= DDInstall_aesimhei, PCI\VEN_10b5&DEV_9030
+"Money Handling Equipment Interface"            = DDInstall_aesimhei, PCI\VEN_10b5&DEV_9030&SUBSYS_28350000
+
+
+;-----------------------------------------------------------
+; Source file information
+;-----------------------------------------------------------
+
+
+[DestinationDirs]
+CopyFiles_ApiDll = 11                        ;11 = System Directory
+DefaultDestDir   = 10, System32\Drivers      ;10 = Windows Directory
+
+[SourceDisksFiles]
+aesimhei.dll = 1
+aesimhei.sys = 1
+
+[SourceDisksNames]
+1 = %InstallDisk%,,,
+
+;-----------------------------------------------------------
+; General installation section
+;-----------------------------------------------------------
+[CopyFiles_ApiDll]
+aesimhei.dll
+
+[CopyFiles_aesimhei]
+aesimhei.sys
+
+
+
+;-----------------------------------------------------------
+; Windows 2000 installation section
+;-----------------------------------------------------------
+
+[DDInstall_aesimhei.NT]
+AddReg    = AddRegistry_NT_aesimhei
+CopyFiles = CopyFiles_ApiDll, CopyFiles_aesimhei
+
+[DDInstall_aesimhei.NT.Services]
+AddService = aesimhei, 0x00000002, Service_Inst_aesimhei, EventLog_Inst_aesimhei
+
+[AddRegistry_NT_aesimhei]
+
+[Service_Inst_aesimhei]
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 0                  ; SERVICE_ERROR_IGNORE
+ServiceBinary  = %10%\System32\Drivers\aesimhei.sys
+
+
+
+;-----------------------------------------------------------
+; Windows 98 installation section
+;
+;-----------------------------------------------------------
+
+[DDInstall_aesimhei]
+AddReg    = AddRegistry_aesimhei
+CopyFiles = CopyFiles_ApiDll, CopyFiles_aesimhei
+
+[AddRegistry_aesimhei]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,aesimhei.sys
+HKR,,ErrorLogLevel,0x00010003,2
+
+
+;-----------------------------------------------------------
+; Event log registry entries
+;-----------------------------------------------------------
+
+[EventLog_Inst_aesimhei]
+AddReg = EventLog_AddReg_aesimhei
+
+[EventLog_AddReg_aesimhei]
+HKR,,EventMessageFile,0x00020000,"%SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\aesimhei.sys"
+HKR,,TypesSupported,0x00010001,7
+
+
+
+;-----------------------------------------------------------
+; String information
+;-----------------------------------------------------------
+
+[Strings]
+InstallDisk = "Money Handling Equpipment Installation Disk"
+AES         = "Aardvark Embedded Solutions"

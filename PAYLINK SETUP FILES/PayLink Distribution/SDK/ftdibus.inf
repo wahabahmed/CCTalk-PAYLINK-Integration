@@ -1,0 +1,198 @@
+; FTDIBUS.INF
+; 
+; Copyright © 2000-2010 Future Technology Devices International Limited
+; 
+; USB serial converter driver installation file for Windows 2000, XP, Server 2003, Vista, Server 2008,
+; Windows 7 and Server 2008 R2 (x86 and x64).
+; 
+; 
+; THIS SOFTWARE IS PROVIDED BY FUTURE TECHNOLOGY DEVICES INTERNATIONAL LIMITED ``AS IS'' AND ANY EXPRESS 
+; OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+; FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL FUTURE TECHNOLOGY DEVICES INTERNATIONAL LIMITED
+; BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+; BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+; (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+; THE POSSIBILITY OF SUCH DAMAGE. 
+ 
+; FTDI DRIVERS MAY BE USED ONLY IN CONJUNCTION WITH PRODUCTS BASED ON FTDI PARTS.
+ 
+; FTDI DRIVERS MAY BE DISTRIBUTED IN ANY FORM AS LONG AS LICENSE INFORMATION IS NOT MODIFIED.
+
+; IF A CUSTOM VENDOR ID AND/OR PRODUCT ID OR DESCRIPTION STRING ARE USED, IT IS THE RESPONSIBILITY OF
+; THE PRODUCT MANUFACTURER TO MAINTAIN ANY CHANGES AND SUBSEQUENT WHQL RE-CERTIFICATION AS A RESULT OF
+; MAKING THESE CHANGES.
+;
+
+
+[Version]
+Signature="$Windows NT$"
+DriverPackageType=PlugAndPlay
+DriverPackageDisplayName=%DESC%
+Class=USB
+ClassGUID={36fc9e60-c465-11cf-8056-444553540000}
+Provider=%FTDI%
+CatalogFile=ftdibus.cat
+DriverVer=07/12/2010,2.08.02
+
+[SourceDisksNames]
+1=%DriversDisk%,,,
+
+[SourceDisksFiles]
+ftdibus.sys = 1,i386
+ftbusui.dll = 1,i386
+ftd2xx.dll = 1,i386
+FTLang.Dll = 1,i386
+
+[SourceDisksFiles.amd64]
+ftdibus.sys = 1,amd64
+ftbusui.dll = 1,amd64
+ftd2xx64.dll = 1,amd64
+ftd2xx.dll = 1,i386
+FTLang.Dll = 1,amd64
+
+[DestinationDirs]
+FtdiBus.NT.Copy = 10,system32\drivers
+FtdiBus.NT.Copy2 = 10,system32
+FtdiBus.NTamd64.Copy = 10,system32\drivers
+FtdiBus.NTamd64.Copy2 = 10,system32
+FtdiBus.NTamd64.Copy3 = 10,syswow64
+
+
+[Manufacturer]
+%Ftdi%=FtdiHw,NTamd64
+
+[FtdiHw]
+%USB\VID_106F&PID_0001.DeviceDesc%=FtdiBusA.NT,USB\VID_106F&PID_0001
+%USB\VID_106F&PID_0002.DeviceDesc%=FtdiBusA.NT,USB\VID_106F&PID_0002
+%USB\VID_106F&PID_0004.DeviceDesc%=FtdiBusA.NT,USB\VID_106F&PID_0004
+%USB\VID_106F&PID_0005.DeviceDesc%=FtdiBusA.NT,USB\VID_106F&PID_0005
+%USB\VID_106F&PID_0006.DeviceDesc%=FtdiBusA.NT,USB\VID_106F&PID_0006
+%USB\VID_106F&PID_0008.DeviceDesc%=FtdiBusA.NT,USB\VID_106F&PID_0008
+%USB\VID_106F&PID_0009.DeviceDesc%=FtdiBusA.NT,USB\VID_106F&PID_0009
+%USB\VID_106F&PID_000A.DeviceDesc%=FtdiBusA.NT,USB\VID_106F&PID_000A
+
+%USB\VID_0403&PID_de50.DeviceDesc%=FtdiBusX.NT,USB\VID_0403&PID_de50
+%USB\VID_0403&PID_de52.DeviceDesc%=FtdiBusA.NT,USB\VID_0403&PID_de52
+
+[FtdiHw.NTamd64]
+%USB\VID_106F&PID_0001.DeviceDesc%=FtdiBusA.NTamd64,USB\VID_106F&PID_0001
+%USB\VID_106F&PID_0002.DeviceDesc%=FtdiBusA.NTamd64,USB\VID_106F&PID_0002
+%USB\VID_106F&PID_0004.DeviceDesc%=FtdiBusA.NTamd64,USB\VID_106F&PID_0004
+%USB\VID_106F&PID_0005.DeviceDesc%=FtdiBusA.NTamd64,USB\VID_106F&PID_0005
+%USB\VID_106F&PID_0006.DeviceDesc%=FtdiBusA.NTamd64,USB\VID_106F&PID_0006
+%USB\VID_106F&PID_0008.DeviceDesc%=FtdiBusA.NTamd64,USB\VID_106F&PID_0008
+%USB\VID_106F&PID_0009.DeviceDesc%=FtdiBusA.NTamd64,USB\VID_106F&PID_0009
+%USB\VID_106F&PID_000A.DeviceDesc%=FtdiBusA.NTamd64,USB\VID_106F&PID_000A
+
+%USB\VID_0403&PID_de50.DeviceDesc%=FtdiBusX.NTamd64,USB\VID_0403&PID_de50
+%USB\VID_0403&PID_de52.DeviceDesc%=FtdiBusA.NTamd64,USB\VID_0403&PID_de52
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+[FtdiBusA.NT]
+CopyFiles=FtdiBus.NT.Copy,FtdiBus.NT.Copy2
+AddReg=FtdiBus.NT.AddReg
+
+[FtdiBusA.NTamd64]
+CopyFiles=FtdiBus.NTamd64.Copy,FtdiBus.NTamd64.Copy2,FtdiBus.NTamd64.Copy3
+AddReg=FtdiBus.NT.AddReg
+
+[FtdiBusA.NT.Services]
+AddService = FTDIBUS, 0x00000002, FtdiBus.NT.AddService
+
+[FtdiBusA.NTamd64.Services]
+AddService = FTDIBUS, 0x00000002, FtdiBus.NT.AddService
+
+[FtdiBusA.NT.HW] 
+AddReg=FtdiBusA.NT.HW.AddReg 
+
+[FtdiBusA.NTamd64.HW] 
+AddReg=FtdiBusA.NT.HW.AddReg 
+
+[FtdiBusA.NT.HW.AddReg] 
+HKR,,"ConfigData",0x00010001,7 
+
+
+
+[FtdiBusX.NT]
+CopyFiles=FtdiBus.NT.Copy,FtdiBus.NT.Copy2
+AddReg=FtdiBus.NT.AddReg
+
+[FtdiBusX.NTamd64]
+CopyFiles=FtdiBus.NTamd64.Copy,FtdiBus.NTamd64.Copy2,FtdiBus.NTamd64.Copy3
+AddReg=FtdiBus.NT.AddReg
+
+[FtdiBusX.NT.Services]
+AddService = FTDIBUS, 0x00000002, FtdiBus.NT.AddService
+
+[FtdiBusX.NTamd64.Services]
+AddService = FTDIBUS, 0x00000002, FtdiBus.NT.AddService
+
+[FtdiBusX.NT.HW] 
+AddReg=FtdiBusX.NT.HW.AddReg 
+
+[FtdiBusX.NTamd64.HW] 
+AddReg=FtdiBusX.NT.HW.AddReg 
+
+[FtdiBusX.NT.HW.AddReg] 
+HKR,,"ConfigData",0x00010001,0 
+
+
+
+[FtdiBus.NT.AddService]
+DisplayName = %SvcDesc%
+ServiceType = 1 ; SERVICE_KERNEL_DRIVER
+StartType = 3 ; SERVICE_DEMAND_START
+ErrorControl = 1 ; SERVICE_ERROR_NORMAL
+ServiceBinary = %10%\system32\drivers\ftdibus.sys
+LoadOrderGroup = Base
+AddReg = FtdiBus.NT.AddService.AddReg
+
+[FtdiBus.NT.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,ftdibus.sys
+HKR,,EnumPropPages32,,"ftbusui.dll,FTBUSUIPropPageProvider"
+
+[FtdiBus.NT.AddService.AddReg]
+;HKR,Parameters,"LocIds",1,31,00,00,00,32,00,00,00,00
+;HKR,Parameters,"RetryResetCount",0x10001,50
+
+
+[FtdiBus.NT.Copy]
+ftdibus.sys
+
+[FtdiBus.NT.Copy2]
+ftbusui.dll
+ftd2xx.dll
+FTLang.dll
+
+[FtdiBus.NTamd64.Copy]
+ftdibus.sys
+
+[FtdiBus.NTamd64.Copy2]
+ftbusui.dll
+ftd2xx.dll,ftd2xx64.dll
+FTLang.dll
+
+[FtdiBus.NTamd64.Copy3]
+ftd2xx.dll
+
+[Strings]
+Ftdi="Money Controls"
+DESC="Money Controls CDM Driver Package"
+DriversDisk="Money Controls FTDI USB Drivers Disk"
+USB\VID_106F&PID_0001.DeviceDesc="Ardac Elite"
+USB\VID_106F&PID_0002.DeviceDesc="Ardac EP"
+USB\VID_106F&PID_0004.DeviceDesc="USB Dongle"
+USB\VID_106F&PID_0005.DeviceDesc="USB Pod"
+USB\VID_106F&PID_0006.DeviceDesc="Bulk Coin Sorter"
+USB\VID_106F&PID_0008.DeviceDesc="USB Flash"
+USB\VID_106F&PID_0009.DeviceDesc="NR2"
+USB\VID_106F&PID_000A.DeviceDesc="CR10x"
+
+USB\VID_0403&PID_de50.DeviceDesc="Paylink"
+USB\VID_0403&PID_de52.DeviceDesc="uPaylink Dongle"
+SvcDesc="USB Serial Converter Driver"
+ClassName="USB"
